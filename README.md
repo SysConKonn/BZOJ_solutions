@@ -194,5 +194,7 @@ splay模板题， 分离区间打翻转标记，查询时pushdown即可。
 
 ### 3626 LCA
 用树链剖分配线段树维护区间和然后转化成某个状态z点到根的路径大小最后用差分维护就行了。
+
 [有用的博客](http://hzwer.com/3891.html)
+
 [有用的博客2](https://www.cnblogs.com/JoeFan/p/4229141.html)
