@@ -1,0 +1,48 @@
+** 第一问
+quick_pow解决问题
+** 第二问
+可以推个式子。
+
+x*y=z (mod p)
+
+x=z*ine(y) (mod p)  /*ine()为求逆元*/
+
+由于p为质数，所以由费马小定理可以推得ine(y)=y^p-2 
+
+然后就解决了咯。
+
+** 第三问
+使用BSGS
+
+这里有一篇好博客。
+
+http://blog.csdn.net/clover_hxy/article/details/50683832
+
+
+粘贴里面的一些内容：
+
+具体步骤如下：
+
+先把x=i*m-j，其中m=ceil(sqrt(C))，（ceil是向上取整）。
+
+这样原式就变为A^(i*m-j)=B(mod C)，
+
+再变为A^j×B=A^(m*i) (mod C)。
+
+枚举j(范围0-m),将A^j×B存入hash表
+
+枚举i(范围1-m),从hash表中寻找第一个满足A^j×B=A^(m*i) (mod C)。
+
+此时x=i*m-j即为所求。
+
+在网上看到的其他题解大多用的是x=i*m+j，也可以做，只是会牵扯的求逆元，所以比较麻烦。使x=i*m-j就可以轻松避免这个问题了。
+
+那么肯定有人会有疑问为何只计算到m=ceil(sqrt(C))就可以确定答案呢？
+
+x=i*m-j  也就是x 的最大值不会超过p,那超过p的怎么办 ？
+
+有一个公式  a^(k mod p-1)=a^k (mod p)     这个公式的推导需要用到费马小定理
+
+k mod p-1可以看做 k-m（p-1）  ,原式可化成  a^k/(a^(p-1))^m=a^k (mod p)   
+
+根据费马小定理 a^(p-1)=1  (mod p) 其中p为质数 ，a,p 互质，可得a^k/1^m=a^k  (mod p)   a^k=a^k (mod p) 得证。

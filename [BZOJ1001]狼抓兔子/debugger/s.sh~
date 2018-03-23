@@ -1,0 +1,15 @@
+#!/bin/bash
+g++ -g dtmkr.cpp -o d
+g++ -g s.cpp -o s
+g++ -g t.cpp -o t
+
+while true; do
+	diff s.out t.out
+	if [ $? -ne 0 ] ;
+then
+    echo "Wrong Answer";
+    emacs in;
+    break;
+else
+    echo "Accept";
+fi

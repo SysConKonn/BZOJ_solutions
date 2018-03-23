@@ -1,0 +1,106 @@
+#include <cstdio>
+#include <iostream>
+#include <cstring>
+#include <queue>
+#include <vector>
+#include <algorithm>
+#include <bits/stdc++.h>
+#define MAX_N 2000100
+#define INF 1e8 + 1
+
+struct Edge {
+	int from, to, dist;
+	Edge(int u, int v, int d) : from(u), to(v), dist(d) {}
+};
+vector <Edge> edges;
+vector <int> G[MAX_N];
+int N, M, V, matr[1010][1010];
+int d[MAX_N];
+bool vis[MAX_N];
+
+void AddEdge(int from, int to, int dist) {
+	edges.push_back(Edge(from, to, dist));
+	edges.push_back(Edge(to, from, dist));
+	int m = edges.size();
+	G[from].push_back(m - 2);
+	G[to].push_back(m - 1);
+}
+
+void SPFA (int s, int t) {
+	memset(vis, false, sizeof(vis));
+	queue<int> Q;
+	Q.push(s);
+	//fill(d, d + N * M + 1, INF);
+	d[s] = 0;
+	while (!Q.empty()) {
+		int x = Q.front();
+		Q.pop();
+		for (int i = 0;i < G[x].size(); ++i) {
+			Edge& e = edges[G[x][i]];
+			if (d[e.to] > d[x] + e.dist && !vis[e.to]) {
+				d[e.to] = d[x] + e.dist;
+				vis[e.to] = true;
+				Q.push(e.to);
+			}
+		}
+	}
+	printf("%d\n", d[t]);
+}
+
+void Read () {
+ 	int d;
+  	int t = N * M + 1;
+ 	 for (int i = 1;i < M; ++i) {
+    	scanf("%d", &d);
+  	  	AddEdge(matr[1][i] * 2, 0, d);
+	    AddEdge(0, matr[1][i] * 2, d);
+  	}
+  	for (int i = 2;i < N; ++i) {
+	    for (int j = 1;j < M; ++j) {
+      	scanf("%d", &d);
+      	int x = matr[i][j];
+      	AddEdge(x * 2, (x - M) * 2 + 1, d);
+      	AddEdge((x - M) * 2 + 1, x * 2, d);
+    	}
+  	}
+  	for (int i = 1;i < M; ++i) {
+	    scanf("%d", &d);
+	    AddEdge(matr[N - 1][i] * 2 - 1, t, d);
+	    AddEdge(t, matr[N - 1][i] * 2 - 1, d);
+  	}
+	  
+  	for (int i = 1;i < N; ++i) {
+	    scanf("%d", &d);
+	    AddEdge(matr[i][1] * 2 - 1, t, d);
+	    AddEdge(t, matr[i][1] * 2 - 1, d);
+	    for (int j = 2;j < M; ++j) {
+      	scanf("%d", &d);
+      	int x = matr[i][j] * 2 - 1;
+      	AddEdge(x, x - 1, d);
+      	AddEdge(x - 1, x, d);
+   	 }
+    	scanf("%d", &d);
+    	AddEdge(matr[i][M - 1] * 2, 0, d);
+    	AddEdge(0, matr[i][M - 1] * 2, d);
+  	}
+	  
+  	for (int i = 1;i < N; ++i) {
+	    for (int j = 1;j < M; ++j) {
+      	int x = matr[i][j] * 2 - 1;
+      	scanf("%d", &d);
+      	AddEdge(x, x + 1, d);
+      	AddEdge(x + 1, x, d);
+    	}
+  	}
+}
+
+int main () {
+	scanf("%d%d", &N, &M);
+	int sum = 1;
+	for (int i = 1;i <= N; ++i)
+		for (int j = 1;j <= M; ++j) 
+			matr[i][j] = sum++;
+
+	Read();
+	SPFA(0, N * M + 1);
+}
