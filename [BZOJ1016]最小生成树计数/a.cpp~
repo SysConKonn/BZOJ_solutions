@@ -1,0 +1,27 @@
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include <cstring>
+#define MAX_N 107
+#define MAX_M 1007
+
+struct edge {
+    int u, v, w;
+}e[MAX_M];
+
+struct cls {
+    int l, r, num;
+}a[MAX_M];
+
+int N, M;
+int cnt, sum, res;
+
+bool cmp (const edge a, const edge b) {return a.w < b.w;}
+
+int main () {
+    scanf("%d%d", &N, &M);
+    for (int i = 1;i <= M; ++i) scanf("%d%d%d", &e[i].u, &e[i].v, &e[i].w);
+    std::sort(e + 1, e + M + 1, cmp);
+    return 0;
+}

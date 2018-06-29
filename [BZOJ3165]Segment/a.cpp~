@@ -1,0 +1,53 @@
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include <cstring>
+#define MAX_N 100007
+#define MOD 39989
+#define eps 1e-9
+typedef long long ll;
+
+int N;
+
+struct node {
+    double k, b;
+    int idx;
+    bool vis;
+}t[MAX_N * 4];
+
+bool operator > (double a, double b) {
+    return (a - b) > eps
+}
+
+bool operator == (double a, double b) {
+    return ((a - b) < eps && (a - b) > -eps);
+}
+
+double K, B;
+ll res, res_id, lstres;
+ll ans[MAX_N], ans_id[MAX_N];
+
+void query (int x, int l, int r, int pos) {
+    if (l > r || l > pos || r < pos) return;
+    
+}
+
+int main () {
+    scanf("%d", &N);
+    int op;
+    ll k, x0, y0, x1, y1;
+    for (int i = 1;i <= N; ++i) {
+        scanf("%d", &op);
+        if (op == 1) {
+            scanf("%lld", &k);
+            k = (k + lstres - 1) % MOD + 1;
+            res = res_id = 0;
+            if (res < ans[k] || (res == ans[k] && lstres > ans_id[k]))
+                res = ans_id[k];
+            else query (1, 1, MOD + 10, k);
+            printf("%lld\n", lst_res = res_id);
+        }
+    }
+    return 0;
+}
